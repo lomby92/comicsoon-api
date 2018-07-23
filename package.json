@@ -1,0 +1,30 @@
+{
+  "name": "comicsoon-api",
+  "version": "0.0.1",
+  "description": "Simple REST API for italian comics",
+  "scripts": {
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/tslint -c tslint.json 'src/**/*.ts'",
+    "compile": "rm -rf ./dist && ./node_modules/.bin/tsc -p ./tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lomby92/comicsoon-api.git"
+  },
+  "keywords": [
+    "comics",
+    "nerd"
+  ],
+  "author": "Giacomo Lombardi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lomby92/comicsoon-api/issues"
+  },
+  "homepage": "https://github.com/lomby92/comicsoon-api#readme",
+  "devDependencies": {
+    "@types/node": "^8.0.0",
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2"
+  }
+}
