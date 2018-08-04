@@ -3,7 +3,7 @@ import * as mongoose from "mongoose";
 export class MongooseClient {
 
     public static getInstance(): MongooseClient {
-        if (MongooseClient.instance !== undefined) {
+        if (MongooseClient.instance === undefined) {
             MongooseClient.instance = new MongooseClient();
         }
         return MongooseClient.instance;
