@@ -1,0 +1,13 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "ordered-imports": true,
+        "no-duplicate-imports": true,
+        "no-unused-variable": true,
+        "no-console": [true, "log"],
+        "arrow-parens": false,
+        "no-any": true,
+        "trailing-comma": false,
+        "no-unused-expression": false
+    }
+}
