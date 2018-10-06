@@ -1,4 +1,7 @@
 import * as mongoose from "mongoose";
+import { ComicModel, IComicDocument } from "../models/Comic";
+import { ISaltDocument, SaltModel } from "../models/Salt";
+import { IUserDocument, UserModel } from "../models/User";
 
 export class MongooseClient {
 
@@ -10,6 +13,10 @@ export class MongooseClient {
     }
 
     private static instance: MongooseClient;
+
+    private userModel: mongoose.Model<IUserDocument>;
+    private saltModel: mongoose.Model<ISaltDocument>;
+    private comicModel: mongoose.Model<IComicDocument>;
 
     private constructor() {
         if (
@@ -28,7 +35,34 @@ export class MongooseClient {
         const host: string = process.env.MONGO_HOST;
         const port: string = process.env.MONGO_PORT;
         const db: string = process.env.MONGO_DB;
-        mongoose.connect(`mongodb://${user}:${password}@${host}:${port}/${db}`);
+        if (process.env.NODE_ENV === "test") {
+            mongoose.connect(
+                `mongodb://${host}:${port}/${db}`,
+                { useNewUrlParser: true }
+            );
+        } else {
+            mongoose.connect(
+                `mongodb://${user}:${password}@${host}:${port}/${db}`,
+                { useNewUrlParser: true }
+            );
+        }
+
+        // init models
+        this.userModel = UserModel;
+        this.comicModel = ComicModel;
+        this.saltModel = SaltModel;
+    }
+
+    public getUserModel(): mongoose.Model<IUserDocument> {
+        return this.userModel;
+    }
+
+    public getComicModel(): mongoose.Model<IComicDocument> {
+        return this.comicModel;
+    }
+
+    public getSaltModel(): mongoose.Model<ISaltDocument> {
+        return this.saltModel;
     }
 
 }
