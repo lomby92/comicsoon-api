@@ -4,10 +4,12 @@
   "description": "Simple REST API for italian comics",
   "scripts": {
     "start": "node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --recursive --exit dist/tests/**/*.js",
     "lint": "./node_modules/.bin/tslint -c tslint.json 'src/**/*.ts'",
     "compile": "rm -rf ./dist && ./node_modules/.bin/tsc -p ./tsconfig.json",
-    "postinstall": "npm run lint && npm run compile"
+    "postinstall": "npm run lint && npm run compile",
+    "pretest": "docker-compose up -d && nc -z localhost 27017",
+    "posttest": "docker-compose down"
   },
   "repository": {
     "type": "git",

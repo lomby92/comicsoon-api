@@ -1,0 +1,11 @@
+version: "3.2"
+
+services:
+  mongo:
+    image: library/mongo:4.0
+    ports:
+      - 27017:27017
+    environment:
+      - MONGODB_USER=user
+      - MONGODB_PASSWORD=password
+      - MONGODB_DATABASE=comicsoon

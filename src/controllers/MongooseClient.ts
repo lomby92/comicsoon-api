@@ -35,7 +35,18 @@ export class MongooseClient {
         const host: string = process.env.MONGO_HOST;
         const port: string = process.env.MONGO_PORT;
         const db: string = process.env.MONGO_DB;
-        mongoose.connect(`mongodb://${user}:${password}@${host}:${port}/${db}`);
+        if (process.env.NODE_ENV === "test") {
+            mongoose.connect(
+                `mongodb://${host}:${port}/${db}`,
+                { useNewUrlParser: true }
+            );
+        } else {
+            mongoose.connect(
+                `mongodb://${user}:${password}@${host}:${port}/${db}`,
+                { useNewUrlParser: true }
+            );
+        }
+
         // init models
         this.userModel = UserModel;
         this.comicModel = ComicModel;

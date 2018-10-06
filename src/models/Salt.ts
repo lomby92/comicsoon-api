@@ -8,11 +8,11 @@ const generateSalt = (): string => {
 
 const saltSchema: Schema = new Schema({
     salt_1: {
-        set: generateSalt,
+        default: generateSalt,
         type: String,
     },
     salt_2: {
-        set: generateSalt,
+        default: generateSalt,
         type: String
     },
     user_id: {
