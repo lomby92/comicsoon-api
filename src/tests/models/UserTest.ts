@@ -8,6 +8,8 @@ describe("User model test", () => {
     const User: mongoose.Model<IUserDocument> = MongooseClient.getInstance().getUserModel();
 
     before(async () => {
+        // connect
+        await MongooseClient.getInstance().connect();
         // clean all remaining data
         await User.remove({}).exec();
     });

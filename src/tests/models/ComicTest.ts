@@ -8,6 +8,8 @@ describe("Comic model test", () => {
     const Comic: mongoose.Model<IComicDocument> = MongooseClient.getInstance().getComicModel();
 
     before(async () => {
+        // connect
+        await MongooseClient.getInstance().connect();
         // clean all remaining data
         await Comic.remove({}).exec();
     });
