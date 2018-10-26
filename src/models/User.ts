@@ -1,9 +1,10 @@
-import { Document, model, Model, Schema, SchemaTypes } from "mongoose";
+import { Document, model, Model, Schema } from "mongoose";
 
 const userSchema: Schema = new Schema({
     comics_to_buy: {
+        ref: "Comic",
         required: true,
-        type: [SchemaTypes.ObjectId]
+        type: [Schema.Types.ObjectId]
     },
     is_admin: {
         required: false,
@@ -19,17 +20,18 @@ const userSchema: Schema = new Schema({
         type: String
     },
     purchased_comics: {
+        ref: "Comic",
         required: true,
-        type: [SchemaTypes.ObjectId]
+        type: [Schema.Types.ObjectId]
     }
 });
 
 export interface IUserDocument extends Document {
-    comics_to_buy: Schema.Types.ObjectId[];
+    comics_to_buy: string[];
     is_admin?: boolean;
     nickname: string;
     password_hash: string;
-    purchased_comics: Schema.Types.ObjectId[];
+    purchased_comics: string[];
 }
 
 export const UserModel: Model<IUserDocument> = model("User", userSchema);

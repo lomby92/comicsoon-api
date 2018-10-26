@@ -19,6 +19,14 @@ export class MongooseClient {
     private comicModel: mongoose.Model<IComicDocument>;
 
     private constructor() {
+        // init models
+        this.userModel = UserModel;
+        this.comicModel = ComicModel;
+        this.saltModel = SaltModel;
+    }
+
+    public async connect(): Promise<void> {
+
         if (
             !process.env.MONGO_HOST ||
             !process.env.MONGO_PORT ||
@@ -35,22 +43,19 @@ export class MongooseClient {
         const host: string = process.env.MONGO_HOST;
         const port: string = process.env.MONGO_PORT;
         const db: string = process.env.MONGO_DB;
+
         if (process.env.NODE_ENV === "test") {
-            mongoose.connect(
+            await mongoose.connect(
                 `mongodb://${host}:${port}/${db}`,
                 { useNewUrlParser: true }
             );
         } else {
-            mongoose.connect(
+            await mongoose.connect(
                 `mongodb://${user}:${password}@${host}:${port}/${db}`,
                 { useNewUrlParser: true }
             );
         }
 
-        // init models
-        this.userModel = UserModel;
-        this.comicModel = ComicModel;
-        this.saltModel = SaltModel;
     }
 
     public getUserModel(): mongoose.Model<IUserDocument> {

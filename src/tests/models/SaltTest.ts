@@ -10,6 +10,8 @@ describe("Salt model test", () => {
     const User: mongoose.Model<IUserDocument> = MongooseClient.getInstance().getUserModel();
 
     before(async () => {
+        // connect
+        await MongooseClient.getInstance().connect();
         // clean all remaining data
         await Salt.remove({}).exec();
         await User.remove({}).exec();
