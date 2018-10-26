@@ -4,6 +4,7 @@ import { AbstractRouter } from "./AbstractRouter";
 export class UserRouter extends AbstractRouter {
 
     protected listen(): void {
+        this.router.all("*", (req, res) => { res.status(404).json({ message: "User endpoints under development" }); });
         this.router.get("/", (req: Request, res: Response) => this.getAllUsers(req, res));
         this.router.post("/", (req: Request, res: Response) => this.createUser(req, res));
         this.router.get("/:id", (req: Request, res: Response) => this.getUser(req, res));
