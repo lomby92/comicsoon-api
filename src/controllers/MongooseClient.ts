@@ -1,9 +1,12 @@
 import * as mongoose from "mongoose";
+import { ComicModel, IComicDocument } from "../models/Comic";
+import { ISaltDocument, SaltModel } from "../models/Salt";
+import { IUserDocument, UserModel } from "../models/User";
 
 export class MongooseClient {
 
     public static getInstance(): MongooseClient {
-        if (MongooseClient.instance !== undefined) {
+        if (MongooseClient.instance === undefined) {
             MongooseClient.instance = new MongooseClient();
         }
         return MongooseClient.instance;
@@ -11,7 +14,19 @@ export class MongooseClient {
 
     private static instance: MongooseClient;
 
+    private userModel: mongoose.Model<IUserDocument>;
+    private saltModel: mongoose.Model<ISaltDocument>;
+    private comicModel: mongoose.Model<IComicDocument>;
+
     private constructor() {
+        // init models
+        this.userModel = UserModel;
+        this.comicModel = ComicModel;
+        this.saltModel = SaltModel;
+    }
+
+    public async connect(): Promise<void> {
+
         if (
             !process.env.MONGO_HOST ||
             !process.env.MONGO_PORT ||
@@ -28,7 +43,31 @@ export class MongooseClient {
         const host: string = process.env.MONGO_HOST;
         const port: string = process.env.MONGO_PORT;
         const db: string = process.env.MONGO_DB;
-        mongoose.connect(`mongodb://${user}:${password}@${host}:${port}/${db}`);
+
+        if (process.env.NODE_ENV === "test") {
+            await mongoose.connect(
+                `mongodb://${host}:${port}/${db}`,
+                { useNewUrlParser: true }
+            );
+        } else {
+            await mongoose.connect(
+                `mongodb://${user}:${password}@${host}:${port}/${db}`,
+                { useNewUrlParser: true }
+            );
+        }
+
+    }
+
+    public getUserModel(): mongoose.Model<IUserDocument> {
+        return this.userModel;
+    }
+
+    public getComicModel(): mongoose.Model<IComicDocument> {
+        return this.comicModel;
+    }
+
+    public getSaltModel(): mongoose.Model<ISaltDocument> {
+        return this.saltModel;
     }
 
 }
